@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package api.role.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "linkme-role/api/role;role";
+
+service RoleService {
+	rpc GetPermissions (google.protobuf.Empty) returns (GetPermissionsReply){
+		option (google.api.http) = {
+			get: "/permissions"
+		};
+	}
+
+	rpc AssignPermission (AssignPermissionRequest) returns (google.protobuf.Empty){
+		option (google.api.http) = {
+			post: "/assign_permission"
+			body: "*"
+		};
+	}
+
+	rpc AssignRoleToUser (AssignRoleToUserRequest) returns (google.protobuf.Empty){
+		option (google.api.http) = {
+			post : "/assign_role"
+			body: "*"
+		};
+	}
+
+	rpc RemovePermission (RemovePermissionRequest) returns (google.protobuf.Empty){
+		option (google.api.http) = {
+			post: "/assign_role"
+			body: "*"
+		};
+	}
+
+	rpc RemoveRoleFromUser (RemoveRoleFromUserRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			delete: "/remove_role"
+			body: "*"
+		};
+	}
+}
+
+message GetPermissionsReply {
+	repeated Permission permissions = 1;
+}
+
+message Permission {
+	int64 id = 1;
+	string name = 2;
+	string  path = 3;
+	string  method = 4;
+}
+
+message AssignPermissionRequest {
+	string userName = 1;
+	string path = 2;
+	string method = 3;
+}
+
+message AssignRoleToUserRequest {
+	string userName = 1;
+	string roleName = 2;
+}
+
+message RemovePermissionRequest {
+	string userName = 1;
+	string path = 2;
+	string method = 3;
+}
+
+message RemoveRoleFromUserRequest {
+	string userName = 1;
+	string roleName = 2;
+}
