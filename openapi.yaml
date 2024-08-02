@@ -3,35 +3,20 @@
 
 openapi: 3.0.3
 info:
-    title: Interactive API
+    title: Ranking API
     version: 0.0.1
 paths:
-    /v1/interactive:
-        get:
-            tags:
-                - Interactive
-            operationId: Interactive_GetInteractive
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/GetInteractiveReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /v1/interactive/list:
+    /list:
         post:
             tags:
-                - Interactive
-            operationId: Interactive_ListInteractive
+                - Ranking
+            description: 获取分页的前 N 个排名列表
+            operationId: Ranking_ListTopN
             requestBody:
                 content:
-                    application/json: {}
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ListTopNRequest'
                 required: true
             responses:
                 "200":
@@ -39,7 +24,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/ListInteractiveReply'
+                                $ref: '#/components/schemas/ListTopNReply'
                 default:
                     description: Default error response
                     content:
@@ -48,36 +33,26 @@ paths:
                                 $ref: '#/components/schemas/Status'
 components:
     schemas:
-        GetInteractiveReply:
+        GetOrListRanking:
             type: object
             properties:
-                code:
-                    type: integer
-                    format: int32
-                msg:
+                id:
                     type: string
-                data:
-                    $ref: '#/components/schemas/GetOrListInteractive'
-        GetOrListInteractive:
-            type: object
-            properties:
-                ID:
+                title:
                     type: string
-                BizID:
+                content:
                     type: string
-                BizName:
+                postId:
                     type: string
-                ReadCount:
+                userId:
                     type: string
-                LikeCount:
+                plateId:
                     type: string
-                CollectCount:
+                likeCount:
                     type: string
-                UpdateTime:
+                collectCount:
                     type: string
-                CreateTime:
-                    type: string
-                PostId:
+                viewCount:
                     type: string
         GoogleProtobufAny:
             type: object
@@ -87,7 +62,7 @@ components:
                     description: The type of the serialized message.
             additionalProperties: true
             description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-        ListInteractiveReply:
+        ListTopNReply:
             type: object
             properties:
                 code:
@@ -98,7 +73,15 @@ components:
                 data:
                     type: array
                     items:
-                        $ref: '#/components/schemas/GetOrListInteractive'
+                        $ref: '#/components/schemas/GetOrListRanking'
+        ListTopNRequest:
+            type: object
+            properties:
+                page:
+                    type: integer
+                    format: int32
+                size:
+                    type: string
         Status:
             type: object
             properties:
@@ -116,4 +99,4 @@ components:
                     description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
             description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
 tags:
-    - name: Interactive
+    - name: Ranking
