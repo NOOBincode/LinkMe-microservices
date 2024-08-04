@@ -5,6 +5,7 @@ go 1.22.3
 require (
 	github.com/IBM/sarama v1.43.2
 	github.com/bwmarrin/snowflake v0.3.0
+	github.com/casbin/casbin/v2 v2.98.0
 	github.com/dlclark/regexp2 v1.11.2
 	github.com/go-kratos/kratos/contrib/registry/etcd/v2 v2.0.0-20240627104009-3198e0b83bf2
 	github.com/go-kratos/kratos/v2 v2.7.3
@@ -28,6 +29,7 @@ require (
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
+	github.com/casbin/govaluate v1.2.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd/v22 v22.3.2 // indirect

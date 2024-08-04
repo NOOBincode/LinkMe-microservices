@@ -1,14 +1,14 @@
 package data
 
 import (
-	"linkme-role/internal/conf"
+	"github.com/GoSimplicity/LinkMe-microservices/app/linkme-role/internal/conf"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 )
 
 // ProviderSet is data providers.
-var ProviderSet = wire.NewSet(NewData, NewGreeterRepo)
+var ProviderSet = wire.NewSet(NewData, NewRoleUseCase)
 
 // Data .
 type Data struct {

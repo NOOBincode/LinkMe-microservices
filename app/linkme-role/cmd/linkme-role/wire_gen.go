@@ -7,11 +7,11 @@
 package main
 
 import (
-	"linkme-role/internal/biz"
-	"linkme-role/internal/conf"
-	"linkme-role/internal/data"
-	"linkme-role/internal/server"
-	"linkme-role/internal/service"
+	"github.com/GoSimplicity/LinkMe-microservices/app/linkme-role/internal/biz"
+	"github.com/GoSimplicity/LinkMe-microservices/app/linkme-role/internal/conf"
+	"github.com/GoSimplicity/LinkMe-microservices/app/linkme-role/internal/data"
+	"github.com/GoSimplicity/LinkMe-microservices/app/linkme-role/internal/server"
+	"github.com/GoSimplicity/LinkMe-microservices/app/linkme-role/internal/service"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
@@ -25,7 +25,7 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	if err != nil {
 		return nil, nil, err
 	}
-	greeterRepo := data.NewGreeterRepo(dataData, logger)
+	greeterRepo := data.NewSet(dataData, logger)
 	greeterUsecase := biz.NewGreeterUsecase(greeterRepo, logger)
 	greeterService := service.NewGreeterService(greeterUsecase)
 	grpcServer := server.NewGRPCServer(confServer, greeterService, logger)

@@ -4,7 +4,7 @@ import (
 	"flag"
 	"os"
 
-	"linkme-ranking/internal/conf"
+	"github.com/GoSimplicity/LinkMe-microservices/app/linkme-ranking/internal/conf"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"

@@ -3,43 +3,84 @@
 
 openapi: 3.0.3
 info:
-    title: Interactive API
+    title: RoleService API
     version: 0.0.1
 paths:
-    /v1/interactive:
-        get:
+    /assign_permission:
+        post:
             tags:
-                - Interactive
-            operationId: Interactive_GetInteractive
+                - RoleService
+            operationId: RoleService_AssignPermission
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AssignPermissionRequest'
+                required: true
             responses:
                 "200":
                     description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/GetInteractiveReply'
+                    content: {}
                 default:
                     description: Default error response
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /v1/interactive/list:
+    /assign_role:
         post:
             tags:
-                - Interactive
-            operationId: Interactive_ListInteractive
+                - RoleService
+            operationId: RoleService_RemovePermission
             requestBody:
                 content:
-                    application/json: {}
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RemovePermissionRequest'
                 required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /permissions:
+        get:
+            tags:
+                - RoleService
+            operationId: RoleService_GetPermissions
             responses:
                 "200":
                     description: OK
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/ListInteractiveReply'
+                                $ref: '#/components/schemas/GetPermissionsReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /remove_role:
+        delete:
+            tags:
+                - RoleService
+            operationId: RoleService_RemoveRoleFromUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RemoveRoleFromUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
                 default:
                     description: Default error response
                     content:
@@ -48,37 +89,29 @@ paths:
                                 $ref: '#/components/schemas/Status'
 components:
     schemas:
-        GetInteractiveReply:
+        AssignPermissionRequest:
             type: object
             properties:
-                code:
-                    type: integer
-                    format: int32
-                msg:
+                userName:
                     type: string
-                data:
-                    $ref: '#/components/schemas/GetOrListInteractive'
-        GetOrListInteractive:
+                path:
+                    type: string
+                method:
+                    type: string
+        AssignRoleToUserRequest:
             type: object
             properties:
-                ID:
+                userName:
                     type: string
-                BizID:
+                roleName:
                     type: string
-                BizName:
-                    type: string
-                ReadCount:
-                    type: string
-                LikeCount:
-                    type: string
-                CollectCount:
-                    type: string
-                UpdateTime:
-                    type: string
-                CreateTime:
-                    type: string
-                PostId:
-                    type: string
+        GetPermissionsReply:
+            type: object
+            properties:
+                permissions:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Permission'
         GoogleProtobufAny:
             type: object
             properties:
@@ -87,18 +120,33 @@ components:
                     description: The type of the serialized message.
             additionalProperties: true
             description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-        ListInteractiveReply:
+        Permission:
             type: object
             properties:
-                code:
-                    type: integer
-                    format: int32
-                msg:
+                id:
                     type: string
-                data:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/GetOrListInteractive'
+                name:
+                    type: string
+                path:
+                    type: string
+                method:
+                    type: string
+        RemovePermissionRequest:
+            type: object
+            properties:
+                userName:
+                    type: string
+                path:
+                    type: string
+                method:
+                    type: string
+        RemoveRoleFromUserRequest:
+            type: object
+            properties:
+                userName:
+                    type: string
+                roleName:
+                    type: string
         Status:
             type: object
             properties:
@@ -116,4 +164,4 @@ components:
                     description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
             description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
 tags:
-    - name: Interactive
+    - name: RoleService

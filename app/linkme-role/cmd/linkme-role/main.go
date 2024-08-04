@@ -4,7 +4,7 @@ import (
 	"flag"
 	"os"
 
-	"linkme-role/internal/conf"
+	"github.com/GoSimplicity/LinkMe-microservices/app/linkme-role/internal/conf"
 
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
