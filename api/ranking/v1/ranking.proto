@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package api.ranking.v1;
+
+option go_package = "github.com/GoSimplicity/LinkMe-microservices/api/ranking/v1;v1";
+
+import "google/api/annotations.proto";
+
+service Ranking {
+  // 获取前 N 个排名
+  rpc TopN (TopNRequest) returns (TopNReply);
+  // 获取分页的前 N 个排名列表
+  rpc ListTopN (ListTopNRequest) returns (ListTopNReply) {
+    option (google.api.http) = {
+      post: "/list"
+	    body: "*"
+    };
+  }
+}
+message TopNRequest {
+  int32 count = 1; // 要获取的排名数量
+}
+message TopNReply {
+  int32 code = 1;
+  string msg = 2; 
+}
+message ListTopNRequest {
+  int32 page = 1;
+  int64 size = 2;
+}
+message ListTopNReply {
+  int32 code = 1;
+  string msg = 2;
+  repeated GetOrListRanking data = 3; // 排名列表
+}
+message GetOrListRanking {
+  int64 id = 1;
+  string title = 2;
+  string content = 3;
+  int64 postId = 4;
+  int64 userId = 5;
+  int64 plateId = 6;
+  int64 likeCount = 7;
+  int64 collectCount = 8;
+  int64 viewCount = 9;
+}
